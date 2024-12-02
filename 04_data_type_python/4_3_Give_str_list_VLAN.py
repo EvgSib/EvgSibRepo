@@ -9,4 +9,7 @@
 а не, например, строку, которая похожа на показанный список.
 """
 config = "switchport trunk allowed vlan 1,3,10,20,30,100"
-
+split_1 = config.split()
+split_2 = split_1[-1]
+result = split_2.split(',')
+print(result)
