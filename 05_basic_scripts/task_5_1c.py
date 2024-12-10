@@ -51,8 +51,8 @@ london_co = {
 }
 
 name_router = input('Введите имя устройства: ')
-input_user1 = ', '.join(london_co[name_router].keys())
+input_user = ', '.join(london_co[name_router].keys())
 
-name_parameter = input(f"Введите имя параметра {input_user1}: ")
+name_parameter = input(f"Введите имя параметра {input_user}: ")
 print(london_co[name_router].get(name_parameter, 'Такого параметра нет'))
 

@@ -25,3 +25,22 @@ trunk_template = [
     "switchport mode trunk",
     "switchport trunk allowed vlan {}",
 ]
+#создаем словарь списков
+template = {"access": access_template, "trunk": trunk_template}
+#создаем словарь с выводами сообщений пользователю после введения первого ответа пользователя
+template_info = {"access": 'Введите номер VLAN: ', "trunk": 'Введите разрешенные VLANы: '}
+
+mode = input("Введите режим работы интерфейса (access/trunk): ")
+interface = input("Введите тип и номер интерфейса: ")
+vlan = template_info[mode]
+vlan_output = input(vlan)
+
+print(f"interface {interface}")
+print("\n".join(template[mode]).format(vlan_output))
+
+
+
+
+
+
+
