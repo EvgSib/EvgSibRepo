@@ -1,0 +1,8 @@
+Click
+pyyaml
+pytest
+pytest-clarity
+pytest-json-report
+requests
+PyGithub
+six
