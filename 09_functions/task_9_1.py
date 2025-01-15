@@ -88,4 +88,5 @@ def generate_access_config(intf_vlan_mapping, access_template):
                 result.append(command_another)
     return result
 
-pprint(generate_access_config(access_config_2, access_mode_template))
+if __name__ == '__main__':
+    pprint(generate_access_config(access_config_2, access_mode_template))
