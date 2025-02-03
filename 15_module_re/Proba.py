@@ -1,16 +1,24 @@
 import re
 from pprint import pprint
 
-line1 = 'interface Ethernet0/1'
-line2 = ' ip address 10.255.2.2 255.255.255.0'
-line3 = ' ip address 10.254.2.2 255.255.255.0 secondary'
+with open("sh_version_r1.txt") as f:
+    file_str = f.read()
+    print(file_str)
 
 
-regex = (r"^interface (?P<intf>\S+)"
-             r"|address (?P<ip>\S+) (?P<mask>\S+)")
 
-match = re.search(regex, line)
 
+# line1 = 'MacAddress          IpAddress        Lease(sec)  Type           VLAN  Interface'
+# line2 = '00:E9:BC:3F:A6:50   100.1.1.6        76260       dhcp-snooping   3    FastEthernet0/20'
+# line3 = 'Total number of bindings: 2'
+
+
+# regex = (r'(?P<mac>\S+) +(?P<ip>\S+) +\d+ +\S+ +\d+ +(?P<intf>\S+)')
+
+# match = re.search(regex, line2)
+# print(match.group())
+# print(match.groups())
+# print(match.group('intf'))
 
 # regex = (r'interface (?P<intf>\S+)'
 #          r'|ip address (?P<ip>\S+) (?P<mask>\S+)')

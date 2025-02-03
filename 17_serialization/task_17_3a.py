@@ -17,7 +17,7 @@
 
 Структура словаря должна быть такой:
 {'R4': {'Fa 0/1': {'R5': 'Fa 0/1'},
-        'Fa 0/2': {'R6': 'Fa 0/0'}},
+       {'Fa 0/2': {'R6': 'Fa 0/0'}},
  'R5': {'Fa 0/1': {'R4': 'Fa 0/1'}},
  'R6': {'Fa 0/0': {'R4': 'Fa 0/2'}}}
 
@@ -36,3 +36,36 @@
 в файл topology.yaml. Он понадобится в следующем задании.
 
 """
+import re
+from pprint import pprint
+import yaml
+from task_17_3 import parse_sh_cdp_neighbors
+import glob
+
+# не может импортировать модуль yaml
+# чтобы скрипт запустился нужно скопировать его в /home/python/venv/pyneng-py3-7/lib/python3.7/site-packages/
+
+def generate_topology_from_cdp(list_of_files, save_to_filename = None):
+    result = {}
+    for file in list_of_files:
+        with open(file) as f:
+            command_output = f.read()
+            dict_one_file = parse_sh_cdp_neighbors(command_output)
+            result.update(dict_one_file)
+    if save_to_filename:
+        with open(save_to_filename, "w") as dest_file:
+            yaml.dump(result, dest_file)
+    return result
+
+
+if __name__ == "__main__":
+    list_of_files = glob.glob("sh_cdp_n_*.txt")  # список из 7-и файлов sh_cdp_n_***.txtprint
+    print(list_of_files)
+    pprint(generate_topology_from_cdp(list_of_files, save_to_filename = "sw_templates.yaml"))
+
+
+
+
+
+
+
