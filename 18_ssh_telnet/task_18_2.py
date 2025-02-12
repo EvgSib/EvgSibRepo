@@ -45,4 +45,19 @@ R1#
 с помощью функции send_config_commands.
 """
 
-commands = ["logging 10.255.255.1", "logging buffered 20010", "no logging console"]
+import yaml
+from netmiko import ConnectHandler
+from pprint import pprint
+
+def send_config_commands(device, config_commands):
+    with ConnectHandler(**device) as ssh:
+        ssh.enable()
+        result = ssh.send_config_set(config_commands)
+    return result
+
+if __name__ == "__main__":
+    commands = ["no logging host 10.255.255.1", "no logging buffered 20010", "logging console"]
+    with open("devices.yaml") as f:
+        devices = yaml.safe_load(f)
+        for dev in devices:
+            pprint(send_config_commands(dev, commands))
