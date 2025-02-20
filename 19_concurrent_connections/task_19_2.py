@@ -34,3 +34,69 @@ Ethernet0/1                unassigned      YES NVRAM  administratively down down
 
 Проверить работу функции на устройствах из файла devices.yaml
 """
+
+# не может импортировать модуль yaml
+# чтобы скрипт запустился нужно скопировать его в /home/python/venv/pyneng-py3-7/lib/python3.7/site-packages/
+
+from concurrent.futures import ThreadPoolExecutor
+import time
+import random
+from itertools import repeat
+from datetime import datetime
+import logging
+import netmiko
+import yaml
+
+
+logging.getLogger("paramiko").setLevel(logging.WARNING)
+logging.getLogger("netmiko").setLevel(logging.WARNING)
+
+logging.basicConfig(
+    format = '%(threadName)s %(name)s %(levelname)s: %(message)s',
+    level=logging.INFO
+)
+
+
+def send_show_command(device, show):
+    '''
+    Функция, которая подключается к устройству и отправляет одну команду show.
+    Параметры функции:
+       * device - словареь с параметрами подключения к устройству
+       * show - команда
+    '''
+    host = device['host']
+    logging.info(f">>> Подключаюсь к {host}")
+    with netmiko.ConnectHandler(**device) as ssh:
+        ssh.enable()
+        hostname = ssh.find_prompt()
+        send_command = ssh.send_command(show)
+        output = f"\n{hostname}#{show}\n" + send_command
+        logging.debug(f"\n{output}\n")
+        logging.info(f"<<< Получена информация от {host}")
+        return output
+
+
+def send_show_to_devices(devices, command, filename, limit=3):
+    '''
+    Функция, которая отправляет одну и ту же команду show на разные устройства в параллельных потоках, а затем записывает
+    вывод команд в файл.
+    Параметры функции:
+       * devices - список словарей с параметрами подключения к устройствам
+       * command - команда
+       * filename - имя текстового файла, в который будут записаны выводы всех команд
+       * limit - максимальное количество параллельных потоков (по умолчанию 3)
+    '''
+    with ThreadPoolExecutor(max_workers=limit) as executor:
+        results = executor.map(send_show_command, devices, repeat(command))
+        with open(filename, "w") as f:
+            for output in results:
+                f.write(output)
+    print("### Все потоки отработали")
+    print(f'Результаты сохранены в файл {filename}')
+
+
+if __name__ == "__main__":
+    with open('devices.yaml') as f:
+        devices = yaml.safe_load(f)
+    send_show_to_devices(devices, "sh ip int br", 'sh_ip_int_br_all.txt', limit=2)
+

@@ -56,3 +56,79 @@ commands = {
     "192.168.100.1": ["sh ip int br", "sh int desc"],
     "192.168.100.2": ["sh int desc"],
 }
+
+# Этот словарь нужен только для проверки работа кода, в нем можно менять IP-адреса
+# тест берет адреса из файла devices.yaml
+# commands = {
+#     "192.168.100.3": ["sh ip int br", "sh ip route | ex -"],
+#     "192.168.100.1": ["sh ip int br", "sh int desc"],
+#     "192.168.100.2": ["sh int desc"],
+# }
+
+
+from concurrent.futures import ThreadPoolExecutor, as_completed
+import time
+import random
+from itertools import repeat
+from datetime import datetime
+import logging
+import netmiko
+import yaml
+logging.getLogger("paramiko").setLevel(logging.WARNING)
+logging.getLogger("netmiko").setLevel(logging.WARNING)
+
+logging.basicConfig(
+    format = '%(threadName)s %(name)s %(levelname)s: %(message)s',
+    level=logging.INFO
+)
+# не может импортировать модуль yaml
+# чтобы скрипт запустился нужно скопировать его в /home/python/venv/pyneng-py3-7/lib/python3.7/site-packages/
+
+def send_show_command(device, show):
+    '''
+    Функция, которая подключается к устройству и отправляет одну команду show.
+    Параметры функции:
+       * device - словареь с параметрами подключения к устройству
+       * show - команда
+    '''
+    host = device['host']
+    logging.info(f">>> Подключаюсь к {host}")
+    with netmiko.ConnectHandler(**device) as ssh:
+        ssh.enable()
+        hostname = ssh.find_prompt()
+        send_command = ssh.send_command(show)
+        output = f"\n{hostname}{show}\n" + send_command
+        logging.debug(f"\n{output}\n")
+        logging.info(f"<<< Получена информация от {host}")
+        return output
+
+#этот вариант функции использует executor.submit, поэтому вывод может быть в произвольном порядке.
+def send_command_to_devices(devices, commands_dict, filename, limit=3):
+    '''
+    Функция, которая отправляет список указанных команд show на разные устройства в параллельных потоках,
+    а затем записываетвывод команд в файл.
+    Параметры функции:
+       * devices - список словарей с параметрами подключения к устройствам
+       * commands_dict - словарь в котором указано на какое устройство отправлять какую команду.
+       * filename - имя текстового файла, в который будут записаны выводы всех команд
+       * limit - максимальное количество параллельных потоков (по умолчанию 3)
+    '''
+    with ThreadPoolExecutor(max_workers=limit) as executor:
+        futures = [executor.submit(send_show_command, device, show) for device in devices for show in commands[device["host"]]]
+        with open(filename, "w") as f:
+            for future in as_completed(futures):
+                f.write(future.result())
+    print("### Все потоки отработали")
+    print(f'Результаты сохранены в файл {filename}')
+
+
+if __name__ == "__main__":
+    commands = {
+    "192.168.100.3": ["sh ip int br", "sh ip route | ex -"],
+    "192.168.100.1": ["sh ip int br", "sh int desc"],
+    "192.168.100.2": ["sh int desc", "sh clock"]}
+
+    with open('devices.yaml') as f:
+        devices = yaml.safe_load(f)
+    send_command_to_devices(devices, commands, 'commands_all.txt', limit=2)
+

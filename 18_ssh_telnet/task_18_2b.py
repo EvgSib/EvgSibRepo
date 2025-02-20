@@ -92,6 +92,8 @@ R1(config)#logging
 R1(config)#a
 % Ambiguous command:  "a"
 """
+# не может импортировать модуль yaml
+# чтобы скрипт запустился нужно скопировать его в /home/python/venv/pyneng-py3-7/lib/python3.7/site-packages/
 
 import yaml
 from netmiko import ConnectHandler

@@ -35,6 +35,7 @@ Reachable    Unreachable
 # и возвращает успешно пропингованные и нет ip-адреса
 # Это довольно лучше, чем вышеуказанныя функция
 
+from tabulate import tabulate
 from task_12_1 import ping_ip_addresses
 from task_12_2 import convert_ranges_to_ip_list
 from tabulate import tabulate

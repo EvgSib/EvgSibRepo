@@ -49,6 +49,10 @@ In [12]: pprint(result)
                         'R1(config)#'})
 
 """
+
+# не может импортировать модуль yaml
+# чтобы скрипт запустился нужно скопировать его в /home/python/venv/pyneng-py3-7/lib/python3.7/site-packages/
+
 import yaml
 from netmiko import ConnectHandler
 from pprint import pprint

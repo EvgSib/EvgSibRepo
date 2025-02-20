@@ -105,3 +105,145 @@ R3#
 
 Для выполнения задания можно создавать любые дополнительные функции.
 """
+# не может импортировать модуль yaml
+# чтобы скрипт запустился нужно скопировать его в /home/python/venv/pyneng-py3-7/lib/python3.7/site-packages/
+
+from concurrent.futures import ThreadPoolExecutor, as_completed
+import time
+import random
+from itertools import repeat
+from datetime import datetime
+import logging
+import netmiko
+import yaml
+
+logging.getLogger("paramiko").setLevel(logging.WARNING)
+logging.getLogger("netmiko").setLevel(logging.WARNING)
+
+logging.basicConfig(
+    format = '%(threadName)s %(name)s %(levelname)s: %(message)s',
+    level=logging.INFO
+)
+
+def send_config_commands(device, config_commands):
+    host = device['host']
+    logging.info(f">>> Подключаюсь к {host}")
+    with netmiko.ConnectHandler(**device) as ssh:
+        ssh.enable()
+        hostname = ssh.find_prompt()
+        result = ssh.send_config_set(config_commands)
+        output = f"\n{result}"
+        logging.debug(f"\n{output}\n")
+        logging.info(f"<<< Получена информация от {host}")
+    return output
+
+def send_show_command(device, show):
+    host = device['host']
+    logging.info(f">>> Подключаюсь к {host}")
+    with netmiko.ConnectHandler(**device) as ssh:
+        ssh.enable()
+        hostname = ssh.find_prompt()
+        send_command = ssh.send_command(show)
+        output = f"\n{hostname}{show}\n" + send_command
+        logging.debug(f"\n{output}\n")
+        logging.info(f"<<< Получена информация от {host}")
+    return output
+
+def send_command_to_devices(devices, filename, commands_list_show=None, commands_list_config=None, limit=3):
+    '''
+    Функция, которая отправляет список указанных команд show или config на разные устройства в параллельных потоках,
+    а затем записывает вывод команд в файл.
+    Параметры функции:
+       * devices - список словарей с параметрами подключения к устройствам
+       * commands_list_show - список команд show, в котором указано на какое устройство отправлять какую команду.
+       * commands_list_config - список команд config, в котором указано на какое устройство отправлять какую команду.
+       * filename - имя текстового файла, в который будут записаны выводы всех команд
+       * limit - максимальное количество параллельных потоков (по умолчанию 3)
+    '''
+    with ThreadPoolExecutor(max_workers=limit) as executor:
+        if commands_list_show:
+            futures = [executor.submit(send_commands, device, show) for device in devices for show in commands_list_show]
+            with open(filename, "w") as f:
+                for future in as_completed(futures):
+                    f.write(future.result())
+        elif commands_list_config:
+            results = executor.map(send_config_commands, devices, repeat(commands_list_config))
+            with open(filename, "w") as f:
+                for output in results:
+                    f.write(output)
+    print("### Все потоки отработали")
+    print(f'Результаты сохранены в файл {filename}')
+
+#функция из нашего задания 19.4
+def send_commands_to_devices(devices, filename, *, config=None, show=None, limit = 3):
+    '''
+    Функция, которая отправляет команду show или config на разные устройства в параллельных потоках,
+    а затем записывает вывод команд в файл.
+    Параметры функции:
+        * devices - список словарей с параметрами подключения к устройствам
+        * filename - имя файла, в который будут записаны выводы всех команд
+        * show - команда show, которую нужно отправить (по умолчанию, значение None)
+        * config - команды конфигурационного режима, которые нужно отправить (по умолчанию None)
+        * limit - максимальное количество параллельных потоков (по умолчанию 3)
+    Аргументы show, config и limit должны передаваться только как ключевые.
+    '''
+    if show and config:
+        raise ValueError("Можно передавать только один из аргументов show/config")
+    elif show:
+        send_command_to_devices(devices, filename, commands_list_show=show, limit=limit)
+    elif config:
+        send_command_to_devices(devices, filename, commands_list_config=config, limit=limit)
+
+
+if __name__ == "__main__":
+    commands_config = ["router ospf 55", "network 0.0.0.0 255.255.255.255 area 0"]
+    commands_show = ["sh ip int br", "sh ip route", "sh clock"]
+    with open("devices.yaml") as f:
+        devices = yaml.safe_load(f)
+#         send_commands_to_devices(devices, 'commands_all.txt', show=commands_show, limit = 2)
+        send_commands_to_devices(devices, 'commands_all.txt', config=commands_config, limit = 2)
+
+#ниже решение Н.Самойленко (поизящнее)
+# from itertools import repeat
+# from concurrent.futures import ThreadPoolExecutor, as_completed
+
+# from netmiko import ConnectHandler, NetMikoTimeoutException
+# import yaml
+
+
+# def send_show_command(device, command):
+#     with ConnectHandler(**device) as ssh:
+#         ssh.enable()
+#         result = ssh.send_command(command)
+#         prompt = ssh.find_prompt()
+#     return f"{prompt}{command}\n{result}\n"
+
+
+# def send_cfg_commands(device, commands):
+#     with ConnectHandler(**device) as ssh:
+#         ssh.enable()
+#         result = ssh.send_config_set(commands)
+#     return f"{result}\n"
+
+
+# def send_commands_to_devices(devices, filename, *, show=None, config=None, limit=3):
+#     if show and config:
+#         raise ValueError("Можно передавать только один из аргументов show/config")
+#     command = show if show else config
+#     function = send_show_command if show else send_cfg_commands
+
+#     with ThreadPoolExecutor(max_workers=limit) as executor:
+#         futures = [executor.submit(function, device, command) for device in devices]
+#         with open(filename, "w") as f:
+#             for future in as_completed(futures):
+#                 f.write(future.result())
+
+
+# if __name__ == "__main__":
+#     command = "sh ip int br"
+#     with open("devices.yaml") as f:
+#         devices = yaml.load(f)
+#     send_commands_to_devices(devices, show=command, filename="result.txt")
+#     send_commands_to_devices(devices, config="logging 10.5.5.5", filename="result.txt")
+
+
