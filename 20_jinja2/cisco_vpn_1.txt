@@ -6,7 +6,7 @@ crypto isakmp policy 10
 
 crypto isakmp key cisco address 192.168.100.2
 
-crypto ipsec transform-set AESSHA esp-aes esp-sha-hmac
+crypto ipsec transform-set AESSHA esp-aes esp-sha-hmacc
  mode transport
 
 crypto ipsec profile GRE
@@ -17,4 +17,6 @@ interface Tunnel 10
  tunnel source 192.168.100.1
  tunnel destination 192.168.100.2
  tunnel protection ipsec profile GRE
+
+commands = 'crypto isakmp policy 10\n encr aes\n authentication pre-share\n group 5\n hash sha\n\ncrypto isakmp key cisco address 192.168.100.2\n\ncrypto ipsec transform-set AESSHA esp-aes esp-sha-hmacc\n mode transport'
 

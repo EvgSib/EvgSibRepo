@@ -17,3 +17,19 @@
 В качестве данных, используйте информацию из файла data_files/router_info.yml
 
 """
+# не может импортировать модуль yaml
+# чтобы скрипт запустился нужно скопировать его в /home/python/venv/pyneng-py3-7/lib/python3.7/site-packages/
+
+from task_20_1 import generate_config
+import yaml
+
+# содержимое шаблона смотри в файле templates/cisco_router_base.txt
+if __name__ == "__main__":
+    data_file = "data_files/router_info.yml" #это словарь со значениями переменных
+    template_file = "templates/cisco_router_base.txt" #это шаблон конфигурации с переменными
+    with open(data_file) as f:
+        data = yaml.safe_load(f)
+    print(generate_config(template_file, data))
+
+
+

@@ -32,3 +32,22 @@ interface Gi0/10
 Не копируйте код функции generate_config.
 
 """
+# не может импортировать модуль yaml
+# чтобы скрипт запустился нужно скопировать его в /home/python/venv/pyneng-py3-7/lib/python3.7/site-packages/
+
+from task_20_1 import generate_config
+import yaml
+
+# содержимое шаблона смотри в файле templates/add_vlan_to_switch.txt
+if __name__ == "__main__":
+    data_file = "data_files/add_vlan_to_switch.yaml" #это словарь со значениями переменных
+    template_file = "templates/add_vlan_to_switch.txt" #это шаблон конфигурации с переменными
+    with open(data_file) as f:
+        data = yaml.safe_load(f)
+    print(generate_config(template_file, data))
+
+# шаблон выглядит так templates/ospf.txt
+
+
+
+

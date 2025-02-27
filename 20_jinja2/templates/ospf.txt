@@ -1,0 +1,15 @@
+router ospf {{ process }}
+ router-id {{ router_id }}
+ auto-cost reference-bandwidth {{ ref_bw }}
+ {% for net in ospf_intf %}
+ network {{ net.ip }} 0.0.0.0 area {{ net.area }}
+ {% if net.passive %}
+ passive-interface FastEthernet{{ net.name }}
+ {% endif %}
+ {% endfor %}
+{% for pass in ospf_intf %}
+{% if pass.passive == False %}
+interface FastEthernet{{ pass.name }}
+ ip ospf hello-interval 1
+{% endif %}
+{% endfor %}

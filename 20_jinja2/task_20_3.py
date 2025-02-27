@@ -55,3 +55,36 @@ interface Fa0/1.100
 interface Fa0/1.200
  ip ospf hello-interval 1
 """
+# не может импортировать модуль yaml
+# чтобы скрипт запустился нужно скопировать его в /home/python/venv/pyneng-py3-7/lib/python3.7/site-packages/
+
+from task_20_1 import generate_config
+import yaml
+
+# содержимое шаблона смотри в файле templates/ospf.txt
+if __name__ == "__main__":
+    data_file = "data_files/ospf.yml" #это словарь со значениями переменных
+    template_file = "templates/ospf.txt" #это шаблон конфигурации с переменными
+    with open(data_file) as f:
+        data = yaml.safe_load(f)
+    print(generate_config(template_file, data))
+
+# шаблон выглядит так templates/ospf.txt
+# router ospf {{ process }}
+#  router-id {{ router_id }}
+#  auto-cost reference-bandwidth {{ ref_bw }}
+#  {% for net in ospf_intf %}
+#  network {{ net.ip }} 0.0.0.0 area {{ net.area }}
+#  {% endfor %}
+# {% for pass in ospf_intf %}
+#  {% if pass.passive %}
+#  passive-interface FastEthernet{{ pass.name }}
+#  {% endif %}
+# {% endfor %}
+# {% for pass in ospf_intf %}
+# {% if pass.passive == False %}
+# interface FastEthernet{{ pass.name }}
+#  ip ospf hello-interval 1
+# {% endif %}
+# {% endfor %}
+
