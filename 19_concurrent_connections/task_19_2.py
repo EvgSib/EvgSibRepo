@@ -100,3 +100,11 @@ if __name__ == "__main__":
         devices = yaml.safe_load(f)
     send_show_to_devices(devices, "sh ip int br", 'sh_ip_int_br_all.txt', limit=2)
 
+# def send_show_to_devices(devices, command, filename, limit=3):
+#     with ThreadPoolExecutor(max_workers=limit) as executor:
+#         results = executor.map(send_show_command, devices, repeat(command))
+#         with open(filename, "w") as f:
+#             for dev, output in zip(devices, results):
+#                 f.write(output)
+#     print("### Все потоки отработали")
+#     print(f'Результаты сохранены в файл {filename}')
