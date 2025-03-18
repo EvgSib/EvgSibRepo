@@ -32,8 +32,18 @@ Out[3]:
  ('R3', 'Eth0/2'): ('R5', 'Eth0/0')}
 
 """
+from pprint import pprint
 
-topology_example = {
+class Topology:
+    def __init__(self, topology_dict):
+        self.topology = {}
+        for local, remote in topology_dict.items():
+            if not self.topology.get(remote) == local:
+                self.topology[local] = remote
+
+
+if __name__ == "__main__":
+    topology_example = {
     ("R1", "Eth0/0"): ("SW1", "Eth0/1"),
     ("R2", "Eth0/0"): ("SW1", "Eth0/2"),
     ("R2", "Eth0/1"): ("SW2", "Eth0/11"),
@@ -44,3 +54,10 @@ topology_example = {
     ("SW1", "Eth0/2"): ("R2", "Eth0/0"),
     ("SW1", "Eth0/3"): ("R3", "Eth0/0"),
 }
+    top = Topology(topology_example)
+    pprint(top.topology)
+
+
+
+
+
