@@ -48,9 +48,9 @@ class IPAddress:
         ip_address, mask = ip_mask.split('/')
         self.ip_address = ip_address
         self.mask = mask
-        self._ip_examination(ip_address, mask)
+        self._check_ip(ip_address, mask)
 
-    def _ip_examination(self, ip_address, mask):
+    def _check_ip(self, ip_address, mask):
         octets = ip_address.split(".")
         correct_ip, correct_mask = [True,True]
 
