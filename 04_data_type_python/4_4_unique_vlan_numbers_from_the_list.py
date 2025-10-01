@@ -10,6 +10,6 @@
 с помощью print.
 """
 vlans = [10, 20, 30, 1, 2, 100, 10, 30, 3, 4, 10]
-dict = set(vlans)
-result = sorted(list(dict))
+set_vlans = set(vlans)
+result = sorted(list(set_vlans))
 print(result)

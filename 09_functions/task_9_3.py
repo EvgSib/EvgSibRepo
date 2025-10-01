@@ -56,7 +56,8 @@ def get_int_vlan_map(config_filename):
                 result_trunk[interface] = vlans
     return result_access, result_trunk
 
-pprint(get_int_vlan_map("config_sw1.txt"))
+if __name__ == '__main__':
+    pprint(get_int_vlan_map("config_sw1.txt"))
 
 # def get_int_vlan_map(config_filename):
 #     access_dict = {}

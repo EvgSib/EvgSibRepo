@@ -72,4 +72,5 @@ def generate_access_config(intf_vlan_mapping, access_template, port_security=Non
             result.extend(port_security)
     return result
 
-pprint(generate_access_config(access_config, access_mode_template, port_security_template))
+if __name__ == '__main__':
+    pprint(generate_access_config(access_config, access_mode_template, port_security_template))

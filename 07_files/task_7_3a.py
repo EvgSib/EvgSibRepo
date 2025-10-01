@@ -41,8 +41,6 @@
 
 """
 
-
-
 newlist = []
 
 with open("CAM_table.txt", "r") as f:
@@ -56,6 +54,7 @@ list_sorted = sorted(newlist)
 
 for vlan, mac, intf in list_sorted:
     print(f"{vlan:<9}{mac:20}{intf}")
+
 # или короче вывод
 # for vlan, mac, interface in sorted(newlist):
 #     print(f"{vlan:<9}{mac:20}{intf}")

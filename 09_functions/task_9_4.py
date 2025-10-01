@@ -83,7 +83,9 @@ def convert_config_to_dict(config_filename):
     return config_dict
 
 result = convert_config_to_dict('config_sw1.txt')
+# sort_dicts=False применяется только с python 3.8 и выше
 pprint(result, sort_dicts=False)
+
 
 # def convert_config_to_dict(config_filename):
 
@@ -97,3 +99,5 @@ pprint(result, sort_dicts=False)
 #                 if line.startswith(' '):
 #                     list_value.append(line.rstrip())
 #     return result
+
+

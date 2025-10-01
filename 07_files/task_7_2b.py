@@ -15,6 +15,10 @@
 Ограничение: Все задания надо выполнять используя только пройденные темы.
 
 """
+#чтобы файл запустился из терминала нужно скпировать
+#файл со скриптом и config_sw1.txt в site-packages и запустить
+#python@debian: $ python task_7_2b.py config_sw1.txt config_sw1_output.txt
+
 from sys import argv
 filename1 = argv[1]
 filename2 = argv[2]

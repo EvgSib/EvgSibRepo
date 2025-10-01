@@ -93,6 +93,7 @@ if __name__ == "__main__":
         "secret": "cisco",
     }
     r1 = CiscoTelnet(**r1_params)
+    #запускать в интерпритаторе нужно из директории /home/python/venv/pyneng-py3-7/lib/python3.7/site-packages
     pprint(r1.send_show_command("sh ip int br"))
     print(r1.send_show_command("sh ip int br", parse=False))
 

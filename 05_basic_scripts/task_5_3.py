@@ -9,7 +9,7 @@
 
 В зависимости от выбранного режима, на стандартный поток вывода, должна возвращаться
 соответствующая конфигурация access или trunk (шаблоны команд находятся в списках
-access_template и trunk_template).
+access_template и trunk_template).go
 
 При этом, сначала должна идти строка interface и подставлен номер интерфейса, а затем
 соответствующий шаблон, в который подставлен номер VLANа (или список VLANов).
@@ -64,16 +64,16 @@ trunk_template = [
     "switchport trunk allowed vlan {}",
 ]
 
-#создаем словарь словарей с аргументами None
-#config_dict = {'access': dict.fromkeys(access_template), 'trunk': dict.fromkeys(trunk_template)}
-#mode = input('Введите режим работы интерфейса (access/trunk): ').lower()
-#config_dict_keys = ', '.join(config_dict[mode].keys())
-#interface = input('Введите тип и номер интерфейса: ').title()
-#vlan = input('Введите номер влан(ов): ')
-#add_vlan = config_dict_keys.format(vlan)
-#result = add_vlan.split(sep=', ')
-#print("interface {}".format(interface))
-#print(*result, sep='\n')
+# создаем словарь словарей с аргументами None
+# config_dict = {'access': dict.fromkeys(access_template), 'trunk': dict.fromkeys(trunk_template)}
+# mode = input('Введите режим работы интерфейса (access/trunk): ').lower()
+# config_dict_keys = ', '.join(config_dict[mode].keys())
+# interface = input('Введите тип и номер интерфейса: ').title()
+# vlan = input('Введите номер влан(ов): ')
+# add_vlan = config_dict_keys.format(vlan)
+# result = add_vlan.split(sep=', ')
+# print("interface {}".format(interface))
+# print(*result, sep='\n')
 
 template = {"access": access_template, "trunk": trunk_template}
 

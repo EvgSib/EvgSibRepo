@@ -75,6 +75,7 @@ network_4_dec = int(network_24_32, 2)
 print(ip_template_ip_adress.format(network_1_dec, network_2_dec, network_3_dec, network_4_dec))
 
 mask_dec_finish = ip_template_mask_dec.format(mask_dec = name_network_split[1])
+print(mask_dec_finish)
 
 mask_int = int(name_network_split[-1])
 mask_bin = '1' * mask_int
@@ -88,5 +89,5 @@ mask_1_dec = int(mask_0_8, 2)
 mask_2_dec = int(mask_8_16, 2)
 mask_3_dec = int(mask_16_24, 2)
 mask_4_dec = int(mask_24_32, 2)
-print(mask_dec_finish)
+
 print(ip_template_mask_dec_bin.format(mask_1=mask_1_dec, mask_2=mask_2_dec, mask_3 = mask_3_dec, mask_4 = mask_4_dec))

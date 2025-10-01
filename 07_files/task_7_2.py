@@ -39,6 +39,10 @@ interface Ethernet0/3
 ...
 
 """
+#чтобы файл запустился из терминала нужно скпировать
+#файл со скриптом и config_sw1.txt в site-packages и запустить
+#python@debian: $ python task_7_2.py config_sw1.txt
+
 from sys import argv
 filename = argv[1]
 
