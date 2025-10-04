@@ -9,10 +9,10 @@
 
 Формат ввода:
 Две строки
-Первая - график работы. Список дней, каждый в формате
-<часы_открытия>, <часы_закрытия> (в часах, от 6 до 22), разделенный точкой с запятой.
-Вторая - список заказов, каждый в формате
-<количество_изделий>, <время_на_одно_изделие> (количество 0<x<=10, время в минутах, 1<=x<=60).
+Первая - график работы. Список дней, каждый в формате <часы_открытия>, <часы_закрытия> (в часах, от 6 до 22),
+разделенный точкой с запятой.
+Вторая - список заказов, каждый в формате <количество_изделий>, <время_на_одно_изделие>
+(количество 0<x<=10, время в минутах, 1<=x<=60).
 Заказы разделены точкой с запятой.
 
 Формат вывода:
@@ -65,13 +65,39 @@
 8,30;5,35;2,40
 
 Выходные данные:
-0,2,2
+0,1,2
 """
 
 
 def schedule(timetable: str, orders: str) -> str:
-    "your code"
-
+    timetable_spl = timetable.split(';')
+    time_work = []  #time_work = [240, 240, 240]
+    for time in timetable_spl:
+        lst_time = time.split(',')
+        time_work.append((int(lst_time[1]) - int(lst_time[0]))*60)
+    orders_spl = orders.split(';')
+    time_orders = []  #time_orders = [90, 120, 90]
+    for order in orders_spl:
+        ord_spl = order.split(',')
+        time_orders.append(int(ord_spl[0])*int(ord_spl[1]))
+    result = []
+#     time_work = [240, 300, 360]
+#     time_orders = [120, 120, 45]
+    j, k = 0, 0
+    for i in range(0, len(time_orders)):
+        if i == 0:
+            remaining_time = time_work[i] - time_orders[i]
+        while remaining_time < 0:
+            j += 1
+            remaining_time = remaining_time + time_work[j]
+        if remaining_time >= 0:
+            k += 1
+            if k > len(time_orders) - 1:
+                k = k -1
+            remaining_time = remaining_time - time_orders[k]
+            result.append(j)
+    result = [str(i) for i in result]
+    return ','.join(result)
 
 timetable = input()
 orders = input()

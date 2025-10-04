@@ -17,8 +17,8 @@
 2,4,1.11111,2.22222,3.33333,4.44444,5.55555,6.66666,7.77777,8.88888
 
 Выходные данные:
-1.11111,2.22222,3.33333,4.44444
-5.55555,6.66666,7.77777,8.88888
+1.111 2.222 3.333 4.444
+5.556 6.667 7.778 8.889
 
 Пример 2 (тест):
 Входные данные:
@@ -35,7 +35,7 @@
 1,5,1.234,2.345,3.456,4.567,5.678
 
 Выходные данные:
-1.234,2.345,3.456,4.567,5.678
+1.234 2.345 3.456 4.567 5.678
 
 Пример 4 (тест):
 Входные данные:
@@ -72,11 +72,18 @@
 '''
 
 def format_matrix(matrix_string: str) -> str:
-    'your code'
+    ms_spl = matrix_string.split(',')
+    row, column, numbers = ms_spl[0], ms_spl[1], ms_spl[2:]
+    numbers = [round(float(num), 3) for num in numbers]
+    numbers = ['{}'.format(i) for i in numbers]
+    chunks = [numbers[i:i + int(column)] for i in range(0, len(numbers), int(column))] #chunks (перевод - куски)
+    for item in chunks:
+        print(' '.join(item))
+
 
 matrix_string = input()
 formatted_matrix = format_matrix(matrix_string)
-print(formatted_matrix)
+formatted_matrix
 
 
 

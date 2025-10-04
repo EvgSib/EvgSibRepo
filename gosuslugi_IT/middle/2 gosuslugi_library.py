@@ -55,7 +55,7 @@
 Пример 5 (тест):
 Входные данные:
 София:История;Дмитрий:Математика,Физика;Екатерина:Химия
-Квантовая механика:Физика;Занимтельная геохимия:Химия;Методы теории функции комплексного переменного:Математика
+Квантовая механика:Физика;Занимательная геохимия:Химия;Методы теории функции комплексного переменного:Математика
 
 Выходные данные:
 Дмитрий:Квантовая механика,Методы теории функции комплексного переменного;Екатерина:Занимтельная геохимия
@@ -71,10 +71,10 @@
 Пример 7 (из задания):
 Входные данные:
 Софья:История;Дмитрий:Математика,Физика;Екатерина:Химия
-Квартовая механика:Физика;Занимательная геохимия:Химия;Методы теории функции комплексного переменного:Математика
+Квантовая механика:Физика;Занимательная геохимия:Химия;Методы теории функции комплексного переменного:Математика
 
 Выходные данные:
-Дмитрий:Квартовая механика, Методы теории функции комплексного переменного;Екатерина:Занимательная геохимия
+Дмитрий:Квантовая механика,Методы теории функции комплексного переменного;Екатерина:Занимательная геохимия
 
 Пример 8 (из задания):
 Входные данные:
@@ -114,46 +114,54 @@ class Library:
     def __init__(self, book_data):
         self.book_data = book_data
     def compile_list(self):
-        name1, interests1 = student_data.split(':')
-        st = Student(name1, interests1) #создаем экземпляр класса Student
-        list_book = self.book_data.split('-')
+        list_name_area = student_data.split(';')
+        list_book = self.book_data.split(';')
         dict_book = {}
         for i in list_book:
             list_spl = i.split(':')
             dict_book[list_spl[1]] = list_spl[0]
-        list_books_int = [dict_book[item] for item in dict_book.keys() if item in st.interests]
-        if list_books_int:
-            result = st.name + ' - ' + ', '.join(list_books_int)
+        result = []
+        for m in list_name_area:
+            name, list_interests = m.split(':')
+            st = Student(name, list_interests)
+            list_books_int = [dict_book[item] for item in dict_book.keys() if item in st.interests]
+            if list_books_int:
+                result.append(name + ':' + ','.join(list_books_int))
+        if result:
+            return ';'.join(result)
         else:
-            result = 'Список пуст'
-        return result
+            return 'Список пуст'
 
 student_data = input('Введите <имя ученика>:<область_1>,<область_2>,...,<область_N>: ')
 book_data = input('Введите <название книги>:<область>-<название книги>:<область>-...: ')
 school_library = Library(book_data)
 print(school_library.compile_list())
 
-#решение реализованное с помощью одной функции
-# '''<имя ученика>:<область_1>,<область_2>,...,<область_N>'''
-# student_data = 'Софья:Философия,Научная литература,Искусство,География,Математика'
-# '''<название книги>:<область>-<название книги>:<область>-...'''
-# book_data = 'Основы теории функций комплексного переменного:Математика-Теория струн:Научная литература-Загадка трех тел:Научная фантастика-Война и мир:Классика-Илиада:Древняя литература-Одиссея:Древняя литература'
-#     def compile_list(student_data, book_data):
-#         name, list_interests = student_data.split(':')
-#         list_book = book_data.split('-')
-#         dict_book = {}
-#         for i in list_book:
-#             list_spl = i.split(':')
-#             dict_book[list_spl[1]] = list_spl[0]
-#         list_books_int = [dict_book[item] for item in dict_book.keys() if item in list_interests]
+# '''<имя ученика>:<область_1>,<область_2>,...,<область_N>...;<имя ученика>:<область_1>,<область_2>,...'''
+# student_data = 'Софья:История;Дмитрий:Математика'
+# '''<название книги>:<область>;<название книги>:<область>-...'''
+# book_data = 'Квантовая механика:Физика'
+
+# решение просто функцией
+# def compile_list(student_data, book_data):
+#     list_name_area = student_data.split(';')
+#     list_book = book_data.split(';')
+#     dict_book = {}
+#     for i in list_book:
+#         list_spl = i.split(':')
+#         dict_book[list_spl[1]] = list_spl[0]
+#     result = []
+#     for m in list_name_area:
+#         name, list_interests = m.split(':')
+#         list_books_int = []
+#         for item in dict_book.keys():
+#            if item in list_interests:
+#                list_books_int.append(dict_book[item])
 #         if list_books_int:
-#             result = name + ' - ' + ', '.join(list_books_int)
-#         else:
-#             result = name + ' - ' + 'Список пуст'
+#             result.append(name + ':' + ','.join(list_books_int))
+#     if result:
+#         return ';'.join(result)
+#     else:
+#         return 'Список пуст'
 
-#         return print(result)
-
-
-
-
-
+# print(compile_list(student_data, book_data))
