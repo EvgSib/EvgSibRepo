@@ -36,7 +36,7 @@ def get_dominate_prices(stock_prices: str) -> str:
             result.append(stock_prices[i])
         true_false = []
         for j in range(i+1, len(stock_prices)):
-            if stock_prices[i] > stock_prices[j]:
+            if int(stock_prices[i]) > int(stock_prices[j]):
                true_false.append(True)
             else:
                 true_false.append(False)
