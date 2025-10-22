@@ -137,6 +137,36 @@ book_data = input('Введите <название книги>:<область>
 school_library = Library(book_data)
 print(school_library.compile_list())
 
+# такое решение проходит тесты, но походу не засчитывается
+# class Student:
+#     def __init__(self,name,interests):
+#         self.name = name
+#         self.interests = interests.split(',')
+
+# class Library:
+#     def __init__(self, book_data):
+#         self.book_data = book_data
+#     def compile_list(self):
+#         list_name_area = student_data.split(';')
+#         list_book = self.book_data.split(';')
+#         dict_book = {}
+#         for i in list_book:
+#             list_spl = i.split(':')
+#             dict_book[list_spl[1]] = list_spl[0]
+#         result = []
+#         for m in list_name_area:
+#             name, list_interests = m.split(':')
+#             st = Student(name, list_interests)
+#             list_books_int = [dict_book[item] for item in dict_book.keys() if item in st.interests]
+#             if list_books_int:
+#                 result.append(name + ':' + ','.join(list_books_int))
+#         if result:
+#             return ';'.join(result)
+#         else:
+#             return 'Список пуст'
+
+
+
 # '''<имя ученика>:<область_1>,<область_2>,...,<область_N>...;<имя ученика>:<область_1>,<область_2>,...'''
 # student_data = 'Софья:История;Дмитрий:Математика'
 # '''<название книги>:<область>;<название книги>:<область>-...'''

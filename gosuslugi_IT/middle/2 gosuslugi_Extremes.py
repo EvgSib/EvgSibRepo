@@ -36,6 +36,11 @@ max: 9.91429, min: 0.938094
 Выходные данные:
 Экстремумов не обнаружено.
 '''
+# Есть только корявые входные данные, непонятно какие эксптремумы нужно искать
+# Если будут тесты, то будет понятно решение. Ниже представлено несколько вариантов решения.
+# Что не закоментировано, значит все нужно писать в скрипте.
+# Незакоментированная часть для поиска всех максимумом и минимумов в списке
+# Закоментированная часть для поиска только одного максимума и минимума в списке
 
 def extreme_values(data: str, number_of_neighbors: int) -> str:
     number_of_neighbors = int(number_of_neighbors)
@@ -84,8 +89,8 @@ def extreme_values(data: str, number_of_neighbors: int) -> str:
 
 
 
-number_of_neighbors = '1'
-data = '0,3,2,1,3'
+number_of_neighbors = input()
+data = input()
 extremes = extreme_values(data, number_of_neighbors)
 print(extremes)
 

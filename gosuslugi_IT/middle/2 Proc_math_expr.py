@@ -58,7 +58,7 @@
 
 Пример 6 (тест):
 Входные данные:
-10.123+5.876=15.999
+10.123 + 5.876 = 15.999
 
 Выходные данные:
 16.00=16.00
@@ -88,11 +88,12 @@
 import re
 
 def simplify(string: str) -> str:
-    list_exp = re.findall(r'\d*\.?\d*[+|*|\-|/]\d*\.?\d*', string)
+    regex = re.compile(r'\d*\.?\d* ?[+|*|\-|/] ?\d*\.?\d*')
+    list_exp = re.findall(regex, string)
     if list_exp:
         lst_middle = [str(float(eval(item))) for item in list_exp]
         dict_middle = dict(zip(list_exp, lst_middle))
-        str_middle = re.sub(r'\d*\.?\d*[+|*|\-|/]\d*\.?\d*', lambda x: dict_middle[x.group()], string)
+        str_middle = re.sub(regex, lambda x: dict_middle[x.group()], string)
         list_res = re.findall(r'\d+\.*\d*', str_middle)
         lst_result = ['{:.2f}'.format(round(float(item), 2)) for item in list_res]
         dict_result = dict(zip(list_res, lst_result))
@@ -102,7 +103,7 @@ def simplify(string: str) -> str:
         return 'Текст без выражений'
 
 
-text = input()
+text = 'Сложение 0.1 + 0.2 и 0.3 - 0.1'
 print(simplify(text))
 
 
