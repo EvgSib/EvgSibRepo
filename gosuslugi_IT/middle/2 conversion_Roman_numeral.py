@@ -81,11 +81,11 @@ MCCXXXIV
 def roman_to_decimal(roman_number: str) -> str:
     roman_numerals = {'I': 1, 'V': 5, 'X': 10, 'L': 50, 'C': 100, 'D': 500, 'M': 1000}
     lst = [roman_numerals[i] for i in roman_number]
-    out, mx = 0, 0
+    out, last_item = 0, 0
     for cursor in range(len(lst) - 1, -1, -1):
-        if lst[cursor] >= mx:
+        if lst[cursor] >= last_item:
             out = out + lst[cursor]
-            mx = lst[cursor]
+            last_item = lst[cursor]
         else:
             out = out - lst[cursor]
     return out

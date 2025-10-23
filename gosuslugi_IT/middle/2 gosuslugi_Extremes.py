@@ -31,22 +31,44 @@ max: 9.91429, min: 0.938094
 
 Пример 3:
 Входные данные:
-2
-0,1,2,0,3,0,4,0,5,0,6,0,7,0,8,0,9
+1
+0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9
 Выходные данные:
-Экстремумов не обнаружено.
+Экстремумов не обнаружено
+
+Пример 4(тест):
+Входные данные:
+1
+9.0,8.0,7.0,6.0,7.0,4.0,3.0,2.0,1.0
+Выходные данные:
+min: 6.0,max: 7.0
+
+Пример 5(тест):
+Входные данные:
+1
+0.0,1.0,0.0,1.0,0.0,1.0,0.0
+Выходные данные:
+max: 1.0,min: 0.0,max: 1.0,min: 0.0,max: 1.0
+
+Пример 6(тест):
+Входные данные:
+1
+5.0,5.0,5.0,5.0,5.0
+Выходные данные:
+Экстремумов не обнаружено
+
+Пример 7(тест):
+Входные данные:
+2
+10.0,9.0,8.0,7.0,6.0,5.0
+Выходные данные:
+Экстремумов не обнаружено
 '''
-# Есть только корявые входные данные, непонятно какие эксптремумы нужно искать
-# Если будут тесты, то будет понятно решение. Ниже представлено несколько вариантов решения.
-# Что не закоментировано, значит все нужно писать в скрипте.
-# Незакоментированная часть для поиска всех максимумом и минимумов в списке
-# Закоментированная часть для поиска только одного максимума и минимума в списке
 
 def extreme_values(data: str, number_of_neighbors: int) -> str:
     number_of_neighbors = int(number_of_neighbors)
     data = data.split(',')
-    result_max = []
-    result_min = []
+    result = []
     for item in range(1,len(data)):
         if item < number_of_neighbors or item > (len(data) - 1 - number_of_neighbors):
             continue
@@ -56,43 +78,27 @@ def extreme_values(data: str, number_of_neighbors: int) -> str:
             for i in range(item - number_of_neighbors, item + number_of_neighbors + 1):
                 if i == item:
                     continue
-                elif data[i] > data[item]:
+                elif data[item] > data[i]:
+                    true_list_max.append(True)
+                    true_list_min.append(False)
+                elif data[item] < data[i]:
                     true_list_max.append(False)
                     true_list_min.append(True)
                 else:
-                    true_list_max.append(True)
+                    true_list_max.append(False)
                     true_list_min.append(False)
             if all(true_list_max):
-                result_max.append(data[item])
+                result.append(f'max: {data[item]}')
             elif all(true_list_min):
-                result_min.append(data[item])
-    # это при поиске всех максимумов в списке
-    j_result_max = ','.join(result_max)
-    j_result_min = ','.join(result_min)
-    if result_max and result_min:
-        # это при поиске одного максимума в списке
-#         return f'max: {max(result_max)}, min: {min(result_min)}'
-        # это при поиске всех максимумов в списке
-        return f'max: {j_result_max}, min: {j_result_min}'
-    elif result_max and not result_min:
-        # это при поиске одного максимума в списке
-#         return f'max: {max(result_max)}'
-        # это при поиске всех максимумов в списке
-        return f'max: {j_result_max}'
-    elif not result_max and result_min:
-        # это при поиске одного минимума в списке
-#         return f'min: {min(result_min)}'
-        # это при поиске всех максимумов в списке
-        return f'max: {j_result_min}'
+                result.append(f'min: {data[item]}')
+
+    result_max_min = ','.join(result)
+    if result_max_min:
+        return result_max_min
     else:
-        return "Экстремумов не обнаружено."
-
-
+        return "Экстремумов не обнаружено"
 
 number_of_neighbors = input()
 data = input()
 extremes = extreme_values(data, number_of_neighbors)
 print(extremes)
-
-
-
