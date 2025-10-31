@@ -4,8 +4,9 @@
 def property(func):
     def wrapper(self):  # Важно: обёртка должна принимать `self`
         print("Декоратор: Выполняется код перед вызовом метода.")
-        print(func(self))  # Вызов оригинального метода, передавая `self`
+        result = func(self)  # Вызов оригинального метода, передавая `self`
         print("Декоратор: Выполняется код после вызова метода.")
+        return result
     return wrapper
 
 
@@ -31,7 +32,7 @@ class Item:
 
 def pusk():
     item = Item('2023-02-05', 'Шляпа', '4')
-    quarter = item.quarter
-    pass
+    quarter = item.quarter()
+    print('the end')
 
 pusk()
