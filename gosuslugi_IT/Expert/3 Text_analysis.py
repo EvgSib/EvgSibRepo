@@ -18,31 +18,43 @@
 
 Пример 1 (тест):
 Входные данные:
-
+data science
+data science
 
 Выходные данные:
-
+0
 
 Пример 2 (тест):
 Входные данные:
-
+data analysis
+data
 
 Выходные данные:
-
+100
 
 Пример 3 (тест):
 Входные данные:
-
+machine learning
+machine learning
 
 Выходные данные:
+0
 
-
-Пример 4 (из задания):
+Пример 4 (тест):
 Входные данные:
-
+deep learning
+learning
 
 Выходные данные:
+108
 
+Пример 5 (тест):
+Входные данные:
+For whom the bell tolls?
+For you
+
+Выходные данные:
+170
 
 Пример 5 (из задания):
 Входные данные:
@@ -50,7 +62,7 @@ For you
 For whom the bell tolls?
 
 Выходные данные:
-170 (скорей всего неверное значение)
+170
 
 Пример 6 (из задания):
 Входные данные:
@@ -73,16 +85,23 @@ def manhattan_distance(string_one: str, string_two: str) -> str:
     else:
         rest_str = []
 
-    sum_rest_str = sum([ord(i) for i in rest_str])
+    sum_rest_str = []
+    for i in rest_str:
+        if i.isalpha():
+            sum_rest_str.append(ord(i) - ord('a') + 1)
+
+    sum_rest_str = sum(sum_rest_str)
     for char1, char2 in zip(string_one, string_two):
-        sum_rest_str += abs(ord(char1) - ord(char2))
+        if char1.isalpha() and char2.isalpha():
+            sum_rest_str += abs(ord(char1) - ord(char2))
+        elif not char1.isalpha() and char2.isalpha():
+            sum_rest_str += abs(ord(char2) - ord('a') + 1)
+        elif not char2.isalpha() and char1.isalpha():
+            sum_rest_str += abs(ord(char1) - ord('a') + 1)
     return str(sum_rest_str)
 
 string_one = input()
 string_two = input()
 distance = manhattan_distance(string_one,string_two)
 print(distance)
-
-
-
 

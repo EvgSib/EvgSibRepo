@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 '''
+Работа с матрицами
 Описание:
 В математическом программном обеспечении требуется реализовать функционал отображения
 матриц произвольного размера.
@@ -81,9 +82,9 @@ def format_matrix(matrix_string: str) -> str:
         print(' '.join(item))
 
 
-matrix_string = input()
+matrix_string = '2,4,1.11111,2.22222,3.33333,4.44444,5.55555,6.66666,7.77777,8.88888'
 formatted_matrix = format_matrix(matrix_string)
-formatted_matrix
+formatted_matrix #здесь нужно убрать print в исходнике, иначе не вернет все строки
 
 
 

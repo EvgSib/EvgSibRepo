@@ -79,6 +79,7 @@ def number_to_text(number: int) -> str:
 
 
 number = input()
-print(number_to_text(number))
+text = number_to_text(number)
+print(text)
 
 

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 '''
+Экстремумы
 Описание:
 Вы разрабатываете инструмент, который помогает анализировать колебания показателей — например,
 температуру в течение дня, уровень шума или изменения на графике акций.
@@ -92,7 +93,7 @@ def extreme_values(data: str, number_of_neighbors: int) -> str:
             elif all(true_list_min):
                 result.append(f'min: {data[item]}')
 
-    result_max_min = ','.join(result)
+    result_max_min = ', '.join(result)
     if result_max_min:
         return result_max_min
     else:
