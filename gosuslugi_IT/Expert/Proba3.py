@@ -1,12 +1,15 @@
 # -*- coding: utf-8 -*-
-students_info = 'Анна,Математика,75;Анна,Химия,70;Борис,Математика,75;Борис,История,80;Евгений,Математика,50;Евгений,История,75 '
-scores_info = 'Математика,80;Химия,60;История,80'
+import re
+definition = '(define (add x y) (x + y))'
+expression = '(add 2 3)'
 
-students = {}
+regex = r'\(define \((?P<func_args>.+)\) \((?P<function>.+)\)\)'
+match = re.search(regex, definition)
+d = match.groupdict() #{'func_args': 'add x y', 'function': 'x + y'}
+name_func = d['func_args'].split()[0]  #add
+args = d['func_args'].split()[1:]  #['x', 'y']
+function = d['function']  #x + y
 
-for item in students_info.split(';'):
-    name, course, grade = item.split(',')
-    if name not in students:
-        students[name] = {}
-    students[name][course] = int(grade)
-
+print(name_func)
+print(args)
+print(function)
