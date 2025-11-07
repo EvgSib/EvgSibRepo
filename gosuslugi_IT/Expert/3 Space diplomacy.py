@@ -80,23 +80,30 @@ aaabbb?!!!??? bbba! ba
 ? — инвертирует счёт слова (меняет знак на противоположный).
 '''
 
-# не доделал, т.к. непонятно что за тесты
+# нужно тестировать, т.к. непонятно что за тесты
 import re
 
 def alien_translator(message: str) -> str:
     message = message.split()
+    counter = 0
     for item in message:
         if re.search(r'b+a+', item):
-            item = 1
-            quan_vosk, quan_vopr = item.count('!'), item.count('?')
-            counter = item.count('!')
-
+            i = 1
         else:
-            item = -1
+            i = -1
+        quan_vosk, quan_vopr = item.count('!'), item.count('?')
+        if quan_vopr%2:
+            i = -i
+        if quan_vosk > 1:
+            counter += quan_vosk*i
+        else:
+            counter += i
+    if counter > 10:
+        return f'счёт {counter}: нападение неизбежно'
+    else:
+        return f'счёт {counter}: нападения не будет'
 
-
-
-message = 'aaabbb?!!!??? bbba! ba'
+message = 'bbbaaa! aaabbb!!! aaaabbbb! bbbaaa!!!?'
 translation = alien_translator(message)
 print(translation)
 

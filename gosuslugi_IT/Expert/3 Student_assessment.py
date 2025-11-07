@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 '''
+Оценивание студентов
 Описание:
 Вам требуется реализовать функцию, подсчитывающую число неуспевающих по каждому предмету.
 
@@ -67,12 +68,9 @@
 
 def get_results(subjects: str, students: str):
     subjects = subjects.split(';')
-    list_sub = [item.split() for item in subjects] #[['Физкультура': '30'], ['Музыка': '50'], ['Искусство': '40']]
-    my_variables = {} #здесь делается счетчик для каждого предмета
-    for index, element in enumerate(list_sub):
-        variable_name = f"{element[0]}"
-        my_variables[variable_name] = 0
-
+    list_sub = [item.split() for item in subjects] #[['Физкультура', '30'], ['Музыка', '50'], ['Искусство', '40']]
+    #в словаре my_variables создается счетчик для каждого предмета
+    my_variables = {element[0]: 0 for element in list_sub}
     students = students.split(';')
     for stud in students:
         lst_st_sub = stud.split(': ') #['Дима', 'Физкультура 20, Музыка 60, Искусство 30']
