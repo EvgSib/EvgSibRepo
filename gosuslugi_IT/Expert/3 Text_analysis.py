@@ -103,5 +103,5 @@ def manhattan_distance(string_one: str, string_two: str) -> str:
 string_one = input()
 string_two = input()
 distance = manhattan_distance(string_one,string_two)
-print(distance)
+print(distance) # здесь обязательно нужно поменять на distance
 

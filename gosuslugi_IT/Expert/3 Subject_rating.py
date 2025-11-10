@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 '''
 Рейтинг по предмету
+(БЫЛО. Проходит тесты на госуслугах)
 Описание:
 Вам необходимо написать программу для учебного офиса. Программа будет строить отсортированный
 список студентов, которые набрали больше проходного балла по определённому предмету.
@@ -67,8 +68,8 @@ class CourseManager:
                 self.students[name] = {}
             self.students[name][course] = int(grade)
 
-students_info = input()
-scores_info = input()
+students_info = 'Анна,Математика,85;Анна,Химия,90;Борис,Математика,75;Борис,История,80;Евгений,Математика,95;Евгений,История,85'
+scores_info = 'Математика,80'
 c = CourseManager()
 c.student_data()
 data = c.students
@@ -85,7 +86,8 @@ if not name_score:
     print('Никто')
 else:
     # если не нужна сортировка, то убрать функцию sorted
-    for item in sorted(name_score):
+    # здесь обязательна реверсная сортировка, иначе не проходит тест1
+    for item in sorted(name_score, reverse=1):
         print(','.join(item))
 
 

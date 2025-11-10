@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 '''
 Отчёты по продажам
+(БЫЛО. Проходит тесты на госуслугах)
 Описание:
 Напишите программу, которая принимает информацию о продажах и формирует агрегированный
 отчёт о продажах по месяцам, в соответствии с требуемым форматом.
@@ -62,7 +63,7 @@ class Item:
 
 
     @property
-    def quarter(self):
+    def month(self):
         months_dict = {
             "01": "Январь",
             "02": "Февраль",
@@ -87,7 +88,7 @@ def generate_monthly_report(data):
     for item_str in data.split(';'):
         date, product, quantity = item_str.split(':')
         item = Item(date, product, quantity)
-        quarter = item.quarter
+        quarter = item.month
         if quarter not in items_by_quarter:
             items_by_quarter[quarter] = {}
         if product in items_by_quarter[quarter]:
