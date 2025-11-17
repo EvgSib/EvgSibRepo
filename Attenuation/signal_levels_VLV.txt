@@ -1,0 +1,69 @@
+##  an03.sbc.vladivostok.gldn.net  ##################################
+
+
+an03.sbc.Vladivostok#sh int twe1/0/1 trans | b Opt
+                                             Optical   Optical
+             Temperature  Voltage  Current   Tx Power  Rx Power
+Port         (Celsius)    (Volts)  (mA)      (dBm)     (dBm)
+---------    -----------  -------  --------  --------  --------
+Twe1/0/1     30.9       3.33      40.4      -1.4      -1.7   
+
+
+an03.sbc.Vladivostok#sh int twe1/0/2 trans | b Opt
+                                             Optical   Optical
+             Temperature  Voltage  Current   Tx Power  Rx Power
+Port         (Celsius)    (Volts)  (mA)      (dBm)     (dBm)
+---------    -----------  -------  --------  --------  --------
+Twe1/0/2     32.2       3.33      43.0      -1.5      -1.3   
+
+
+an03.sbc.Vladivostok#sh int twe1/0/3 trans | b Opt
+                                             Optical   Optical
+             Temperature  Voltage  Current   Tx Power  Rx Power
+Port         (Celsius)    (Volts)  (mA)      (dBm)     (dBm)
+---------    -----------  -------  --------  --------  --------
+Twe1/0/3     32.3       3.34      39.8      -1.5      -0.5   
+
+
+an03.sbc.Vladivostok#sh int twe1/0/4 trans | b Opt
+                                             Optical   Optical
+             Temperature  Voltage  Current   Tx Power  Rx Power
+Port         (Celsius)    (Volts)  (mA)      (dBm)     (dBm)
+---------    -----------  -------  --------  --------  --------
+Twe1/0/4     33.6       3.36      37.5      -1.3      -0.2   
+
+
+
+###  an04.sbc.vladivostok.gldn.net  ##################################
+
+
+an04.sbc.Vladivostok#sh int twe1/0/1 trans | b Opt
+                                             Optical   Optical
+             Temperature  Voltage  Current   Tx Power  Rx Power
+Port         (Celsius)    (Volts)  (mA)      (dBm)     (dBm)
+---------    -----------  -------  --------  --------  --------
+Twe1/0/1     31.0       3.33      48.3      -1.4      -1.3   
+
+
+an04.sbc.Vladivostok#sh int twe1/0/2 trans | b Opt
+                                             Optical   Optical
+             Temperature  Voltage  Current   Tx Power  Rx Power
+Port         (Celsius)    (Volts)  (mA)      (dBm)     (dBm)
+---------    -----------  -------  --------  --------  --------
+Twe1/0/2     31.7       3.30      41.5      -1.3      -0.7   
+
+
+an04.sbc.Vladivostok#sh int twe1/0/3 trans | b Opt
+                                             Optical   Optical
+             Temperature  Voltage  Current   Tx Power  Rx Power
+Port         (Celsius)    (Volts)  (mA)      (dBm)     (dBm)
+---------    -----------  -------  --------  --------  --------
+Twe1/0/3     30.3       3.34      42.5      -1.4      -2.1   
+
+
+an04.sbc.Vladivostok#sh int twe1/0/4 trans | b Opt
+                                             Optical   Optical
+             Temperature  Voltage  Current   Tx Power  Rx Power
+Port         (Celsius)    (Volts)  (mA)      (dBm)     (dBm)
+---------    -----------  -------  --------  --------  --------
+Twe1/0/4     41.9       3.33      43.5      -1.1      -1.9   

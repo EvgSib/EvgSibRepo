@@ -1,4 +1,20 @@
 # -*- coding: utf-8 -*-
+"""
+Создать программу, которая на вход ожидает файл с выгрузками команд по уровню оптических сигналов.
+В файле "signal_levels_NSK.txt" информация только по оборудованию В.
+
+Функция должна вернуть файл в формате csv со столбцами
+Оборудование А,         Оборудование В,        Оборудование B.   Оборудование B.
+Уровни сигналов:        Уровни сигналов:       Порт              Наименование
+Уровень излучения/      Уровень излучения/
+Уровни приема           Уровни приема
+-1.3dBm/-2.4dBm         -1.8dBm/-1.9dBm        Twe1/0/1         an02.sbc.Nsk
+
+Уровень приема оборудования А равен уровень излучения оборудования В минус 0.6dBm (затухание на патчкорде):
+-1.8dBm - 0.6dBm = -2.4dBm
+Уровень излучения оборудования А равен уровень приема оборудования В плюс 0.6dBm (затухание на патчкорде):
+-1.9dBm + 0.6dBm = -1.3dBm
+"""
 
 import glob
 import re
@@ -60,5 +76,15 @@ def write_inventory_to_csv(data_filenames, csv_filename):
 
 
 if __name__ == "__main__":
-#     data_filenames = glob.glob("signal_levels_*") #список из 2-х файлов signal_levels_KSK.txt, signal_levels_NSK.txt
-    write_inventory_to_csv(['signal_levels_NSK.txt'], 'sbc_power.csv')
+    data_filenames = glob.glob("signal_levels_*") #список из 2-х файлов signal_levels_KSK.txt, signal_levels_NSK.txt
+    write_inventory_to_csv(data_filenames, 'sbc_power.csv')
+    print('Результат сохранен в файл sbc_power.csv')
+
+
+
+
+
+
+
+
+

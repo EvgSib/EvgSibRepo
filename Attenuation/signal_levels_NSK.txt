@@ -1,0 +1,74 @@
+###  an02.sbc.Nsk.gldn.net  ##########################################
+
+
+an02.sbc.Nsk#sh int twe1/0/1 trans | b Opt
+                                             Optical   Optical
+             Temperature  Voltage  Current   Tx Power  Rx Power
+Port         (Celsius)    (Volts)  (mA)      (dBm)     (dBm)
+---------    -----------  -------  --------  --------  --------
+Twe1/0/1     58.4       3.35      50.6      -1.2      -3.2   
+
+
+an02.sbc.Nsk#sh int twe1/0/2 trans | b Opt
+                                             Optical   Optical
+             Temperature  Voltage  Current   Tx Power  Rx Power
+Port         (Celsius)    (Volts)  (mA)      (dBm)     (dBm)
+---------    -----------  -------  --------  --------  --------
+Twe1/0/2     49.0       3.34      51.1      -1.2      -1.9   
+
+
+an02.sbc.Nsk#sh int twe1/0/3 trans | b Opt
+                                             Optical   Optical
+             Temperature  Voltage  Current   Tx Power  Rx Power
+Port         (Celsius)    (Volts)  (mA)      (dBm)     (dBm)
+---------    -----------  -------  --------  --------  --------
+Twe1/0/3     47.1       3.35      51.0      -1.6      -2.0   
+
+
+an02.sbc.Nsk#sh int twe1/0/4 trans | b Opt
+                                             Optical   Optical
+             Temperature  Voltage  Current   Tx Power  Rx Power
+Port         (Celsius)    (Volts)  (mA)      (dBm)     (dBm)
+---------    -----------  -------  --------  --------  --------
+Twe1/0/4     49.9       3.34      46.4      -1.4      -1.4   
+
+
+
+
+an01.sbc.Nsk#sh int twe1/0/1 trans | b Opt
+                                             Optical   Optical
+             Temperature  Voltage  Current   Tx Power  Rx Power
+Port         (Celsius)    (Volts)  (mA)      (dBm)     (dBm)
+---------    -----------  -------  --------  --------  --------
+Twe1/0/1     58.4       3.35      50.6      -1.3      -1.7 
+
+
+
+an01.sbc.Nsk#sh int twe1/0/2 trans | b Opt
+                                             Optical   Optical
+             Temperature  Voltage  Current   Tx Power  Rx Power
+Port         (Celsius)    (Volts)  (mA)      (dBm)     (dBm)
+---------    -----------  -------  --------  --------  --------
+Twe1/0/2     58.4       3.35      50.6      -1.4      -1.8 
+
+
+
+an01.sbc.Nsk#sh int twe1/0/3 trans | b Opt
+                                             Optical   Optical
+             Temperature  Voltage  Current   Tx Power  Rx Power
+Port         (Celsius)    (Volts)  (mA)      (dBm)     (dBm)
+---------    -----------  -------  --------  --------  --------
+Twe1/0/3     58.4       3.35      50.6      -1.4      -0.6
+
+
+
+an01.sbc.Nsk#sh int twe1/0/4 trans | b Opt
+                                             Optical   Optical
+             Temperature  Voltage  Current   Tx Power  Rx Power
+Port         (Celsius)    (Volts)  (mA)      (dBm)     (dBm)
+---------    -----------  -------  --------  --------  --------
+Twe1/0/4     58.4       3.35      50.6      -1.5      -1.7
+
+
+
+
