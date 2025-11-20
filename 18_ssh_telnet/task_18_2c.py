@@ -68,13 +68,19 @@ def send_config_commands(device, config_commands, log=False):
             print(f'Подключаюсь к {hostname}')
         for command in config_commands:
             output_command = ssh.send_config_set(command)
+            true_list = []
             for error in error_list:
                 if error in output_command:
-                    bad[command] = output_command
-                    pprint(f"Команда \"{command}\" выполнилась с ошибкой \"{error}\" на устройстве \"{hostname}\"", width=200)
-                    input_user = input('Продолжать выполнять команды? [y]/n: ')
+                    true_list.append(True)
+                else:
+                    true_list.append(False)
+            if any(true_list):
+                bad[command] = output_command
+                pprint(f"Команда \"{command}\" выполнилась с ошибкой \"{error}\" на устройстве \"{hostname}\"", width=200)
+                input_user = input('Продолжать выполнять команды? [y]/n: ')
                 if input_user == 'n':
-                    break
+                    result = (good, bad)
+                    return result
             else:
                 good[command] = output_command
         result = (good, bad)
@@ -83,7 +89,7 @@ def send_config_commands(device, config_commands, log=False):
 if __name__ == "__main__":
     commands_with_errors = ["logging 0255.255.1", "logging", "a"]
     correct_commands = ["logging buffered 20010", "ip http server"]
-    #correct_commands = ["int lo555"]
+#     correct_commands = ["int lo555"]
     commands = commands_with_errors + correct_commands
 
     with open("devices.yaml") as f:
