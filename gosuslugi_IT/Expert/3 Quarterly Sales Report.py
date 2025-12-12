@@ -75,12 +75,18 @@ Q2:
 - Шапка: 7
 '''
 
+# обертка для прохождения тестов не нужна, но может это влияет на внутр тесты
+def property(func):
+    def wrapper(self):  # Важно: обёртка должна принимать `self`
+        result = func(self)  # Вызов оригинального метода, передавая `self`
+        return result
+    return wrapper
+
 class Item:
     def __init__(self, date, product, quantity):
         self.date = date
         self.product = product
         self.quantity = int(quantity)
-
 
     @property
     def quarter(self):
@@ -100,8 +106,8 @@ def generate_quarterly_report(data):
     # Анализ входных данных и группировка элементов по кварталам
     for item_str in data.split(';'):
         date, product, quantity = item_str.split(':')
-        item = Item(date, product, quantity)
-        quarter = item.quarter
+        i = Item(date, product, quantity)
+        quarter = i.quarter() # если без обертки, то тут должно быть quarter = i.quarter и удалить def property
         if quarter not in items_by_quarter:
             items_by_quarter[quarter] = {}
         if product in items_by_quarter[quarter]:
@@ -114,7 +120,9 @@ def generate_quarterly_report(data):
         for x, y in sorted(value.items()):
             yield f"- {x}: {y}"
 
-input_data = input()
+
+
+input_data = '2023-03-05:Коврик:6;2023-04-25:Бинокль:10;2023-05-10:Компас:8;2023-03-05:Коврик:6;2023-04-25:Бинокль:10;2023-05-10:Компас:8'
 quarterly_report_generator = generate_quarterly_report(input_data)
 for report in quarterly_report_generator:
     print(report)
@@ -122,53 +130,53 @@ for report in quarterly_report_generator:
 
 # ниже приведен код с функцией декоратором, она не обязательна тут
 
-def property(func):
-    def wrapper(self):  # Важно: обёртка должна принимать `self`
-        result = func(self)  # Вызов оригинального метода, передавая `self`
-        return result
-    return wrapper
+# def property(func):
+#     def wrapper(self):  # Важно: обёртка должна принимать `self`
+#         result = func(self)  # Вызов оригинального метода, передавая `self`
+#         return result
+#     return wrapper
 
-class Item:
-    def __init__(self, date, product, quantity):
-        self.date = date
-        self.product = product
-        self.quantity = int(quantity)
-
-
-    @property
-    def quarter(self):
-        month = int(self.date.split('-')[1])
-        if 1 <= month <= 3:
-            return 'Q1'
-        elif 4 <= month <= 6:
-            return 'Q2'
-        elif 7 <= month <= 9:
-            return 'Q3'
-        else:
-            return 'Q4'
+# class Item:
+#     def __init__(self, date, product, quantity):
+#         self.date = date
+#         self.product = product
+#         self.quantity = int(quantity)
 
 
-def generate_quarterly_report(data):
-    items_by_quarter = {}
-    # Анализ входных данных и группировка элементов по кварталам
-    for item_str in data.split(';'):
-        date, product, quantity = item_str.split(':')
-        item = Item(date, product, quantity)
-        quarter = item.quarter()
-        if quarter not in items_by_quarter:
-            items_by_quarter[quarter] = {}
-        if product in items_by_quarter[quarter]:
-            items_by_quarter[quarter][product] += int(quantity)
-        else:
-            items_by_quarter[quarter][product] = int(quantity)
-
-    for key, value in sorted(items_by_quarter.items()):
-        yield f"{key}:"
-        for x, y in sorted(value.items()):
-            yield f"- {x}: {y}"
+#     @property
+#     def quarter(self):
+#         month = int(self.date.split('-')[1])
+#         if 1 <= month <= 3:
+#             return 'Q1'
+#         elif 4 <= month <= 6:
+#             return 'Q2'
+#         elif 7 <= month <= 9:
+#             return 'Q3'
+#         else:
+#             return 'Q4'
 
 
-input_data = input()
-quarterly_report_generator = generate_quarterly_report(input_data)
-for report in quarterly_report_generator:
-    print(report)
+# def generate_quarterly_report(data):
+#     items_by_quarter = {}
+#     Анализ входных данных и группировка элементов по кварталам
+#     for item_str in data.split(';'):
+#         date, product, quantity = item_str.split(':')
+#         item = Item(date, product, quantity)
+#         quarter = item.quarter()
+#         if quarter not in items_by_quarter:
+#             items_by_quarter[quarter] = {}
+#         if product in items_by_quarter[quarter]:
+#             items_by_quarter[quarter][product] += int(quantity)
+#         else:
+#             items_by_quarter[quarter][product] = int(quantity)
+
+#     for key, value in sorted(items_by_quarter.items()):
+#         yield f"{key}:"
+#         for x, y in sorted(value.items()):
+#             yield f"- {x}: {y}"
+
+
+# input_data = input()
+# quarterly_report_generator = generate_quarterly_report(input_data)
+# for report in quarterly_report_generator:
+#     print(report)

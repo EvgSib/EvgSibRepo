@@ -98,24 +98,12 @@ def send_command_to_devices(devices, commands_dict, filename, limit=3):
        * limit - максимальное количество параллельных потоков (по умолчанию 3)
     '''
     with ThreadPoolExecutor(max_workers=limit) as executor:
-        list_commands = [command for command in commands_dict.values()]
-        futures = [executor.submit(send_show_command, devices, list_commands)]
+        futures = [executor.submit(send_show_command, device, commands_dict[device["host"]]) for device in devices]
         with open(filename, "w") as f:
             for future in as_completed(futures):
                 f.write(future.result())
     print("### Все потоки отработали")
     print(f'Результаты сохранены в файл {filename}')
-
-
-def send_command_to_devices(devices, commands_dict, filename, limit=3):
-    with ThreadPoolExecutor(max_workers=limit) as executor:
-        futures = [
-            executor.submit(send_show_command, device, commands_dict[device["host"]])
-            for device in devices
-        ]
-        with open(filename, "w") as f:
-            for future in as_completed(futures):
-                f.write(future.result())
 
 if __name__ == "__main__":
     commands = {

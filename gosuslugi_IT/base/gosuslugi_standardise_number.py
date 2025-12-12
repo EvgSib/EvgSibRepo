@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 '''
+Стандартизация номеров
+(БЫЛО. Проходит тесты на госуслугах)
 Вы разрабатываете программу для отдела кадров, обрабатывающую личные данные пользователей.
 Необходимо написать функцию, преобразующую номера в стандартный вид
 +7(ХХХ)ХХХ-ХХ-ХХ (необходимо также заменять цифру 8 на +7).
@@ -69,29 +71,29 @@
 +7(912)345-67-89
 '''
 
-# def standardise_number(phone_number: str) -> str:
-#     if phone_number.startswith('8'):
-#         phone_number = phone_number.replace('8', '+7', 1)
-#     txt = phone_number.replace(' ', '').replace('(', '').replace(')', '').replace('-', '')
-#     result = txt[0:2]+'('+txt[2:5]+')'+txt[5:8]+'-'+txt[8:10]+'-'+txt[10:12]
-#     return result
-
-# phone_number = input()
-# standardised_number = standardise_number(phone_number)
-# print(standardised_number)
-
-
-import re
 def standardise_number(phone_number: str) -> str:
     if phone_number.startswith('8'):
         phone_number = phone_number.replace('8', '+7', 1)
-    txt = re.sub(r'()- ', '', phone_number)
+    txt = phone_number.replace(' ', '').replace('(', '').replace(')', '').replace('-', '')
     result = txt[0:2]+'('+txt[2:5]+')'+txt[5:8]+'-'+txt[8:10]+'-'+txt[10:12]
     return result
 
-phone_number = '+7(912)-34567-89'
+phone_number = input()
 standardised_number = standardise_number(phone_number)
 print(standardised_number)
+
+
+# import re
+# def standardise_number(phone_number: str) -> str:
+#     if phone_number.startswith('8'):
+#         phone_number = phone_number.replace('8', '+7', 1)
+#     txt = re.sub(r'()- ', '', phone_number)
+#     result = txt[0:2]+'('+txt[2:5]+')'+txt[5:8]+'-'+txt[8:10]+'-'+txt[10:12]
+#     return result
+
+# phone_number = '+7(912)-34567-89'
+# standardised_number = standardise_number(phone_number)
+# print(standardised_number)
 
 
 

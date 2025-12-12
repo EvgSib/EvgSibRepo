@@ -16,7 +16,6 @@ class Item:
         self.product = product
         self.quantity = int(quantity)
 
-
     @property
     def quarter(self):
         month = int(self.date.split('-')[1])
