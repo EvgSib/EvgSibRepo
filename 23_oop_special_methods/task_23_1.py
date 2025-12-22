@@ -76,7 +76,8 @@ class IPAddress:
 
 if __name__ == "__main__":
     ip = IPAddress('10.1.1.1/24')
-    print(ip)
+    print(ip.ip_address)
+    print(ip.mask)
 
 
 

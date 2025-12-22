@@ -6,7 +6,9 @@
 Скопировать и дополнить класс MyNetmiko из задания 24.2.
 
 Добавить метод _check_error_in_command, который выполняет проверку на такие ошибки:
- * Invalid input detected, Incomplete command, Ambiguous command
+- Invalid input detected,
+- Incomplete command,
+- Ambiguous command.
 
 Метод ожидает как аргумент команду и вывод команды.
 Если в выводе не обнаружена ошибка, метод ничего не возвращает.
@@ -34,9 +36,51 @@ ErrorInCommand: При выполнении команды "sh ip br" на ус�
 
 """
 
+from netmiko.cisco.cisco_ios import CiscoIosSSH
+import re
 
 class ErrorInCommand(Exception):
     """
     Исключение генерируется, если при выполнении команды на оборудовании,
     возникла ошибка.
+    Этот класс тупо наследует класс Exception и в выводе вместо Exception
+    будет ErrorInCommand (мой комментарий)
+    класс ErrorInCommand указывается после raise в функции _check_error_in_command
     """
+
+class MyNetmiko(CiscoIosSSH):
+    def __init__(self, **device_params):
+        super().__init__(**device_params)
+        self.enable()
+
+    def _check_error_in_command(self, command, output):
+        regex = "% (?P<err>.+)"
+        template = (
+            'При выполнении команды "{cmd}" на устройстве {device} '
+            "возникла ошибка -> {error}"
+        )
+        error_in_cmd = re.search(regex, output)
+        if error_in_cmd:
+            message = template.format(cmd=command, device=self.host, error=error_in_cmd.group("err"))
+            raise ErrorInCommand(message)
+
+    def send_command(self, command, *args, **kwargs):
+        output = super().send_command(command, *args, **kwargs)
+        self._check_error_in_command(command, output)
+        return output
+
+
+if __name__ == "__main__":
+    device_params = {
+    "device_type": "cisco_ios",
+    "ip": "192.168.100.1",
+    "username": "cisco",
+    "password": "cisco",
+    "secret": "cisco"
+    }
+
+    r1 = MyNetmiko(**device_params)
+    print(r1.send_command('sh ip in br'))
+
+
+

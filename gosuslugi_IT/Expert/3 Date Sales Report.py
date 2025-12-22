@@ -86,6 +86,7 @@ class Item:
         self.product = product
         self.quantity = int(quantity)
 
+
 def generate_quarterly_report(data):
     items_date = {}
     # Анализ входных данных и группировка элементов
