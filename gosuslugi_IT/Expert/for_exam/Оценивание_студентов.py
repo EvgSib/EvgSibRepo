@@ -74,15 +74,14 @@
 
 def get_results(subjects: str, students: str):
     subjects = subjects.split(';')
-    list_sub = [item.split(':') for item in subjects] #[['Физкультура', '30'], ['Музыка', '50'], ['Искусство', '40']]
-    #в словаре my_variables создается счетчик для каждого предмета
+    list_sub = [item.split(':') for item in subjects]
     my_variables = {element[0].strip(): 0 for element in list_sub}
     students = students.split(';')
     for stud in students:
-        lst_st_sub = stud.split(': ') #['Дима', 'Физкультура 20, Музыка 60, Искусство 30']
-        lst_sub = lst_st_sub[1].split(',') #['Физкультура 20', ' Музыка 60', ' Искусство 30']
+        lst_st_sub = stud.split(': ')
+        lst_sub = lst_st_sub[1].split(',')
         for sub in lst_sub:
-            lst_subject = sub.split() #['Физкультура', '20']
+            lst_subject = sub.split()
             if lst_subject[0] in my_variables:
                 for item in list_sub:
                     if lst_subject[0] == item[0].strip() and lst_subject[1] < item[1]:

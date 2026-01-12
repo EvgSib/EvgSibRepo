@@ -73,27 +73,9 @@ def next_smaller(n):
         return -1
     return result
 
-input_string = '8345'
+input_string = input()
 result = next_smaller(input_string)
 print(result)
-
-
-# def next_smaller(n):
-#     num = list(n)
-#     if len(num) > 2:
-#         num[-1], num[-2] = num[-2], num[-1]
-#     if int(n) > int(''.join(num)):
-#         return int(''.join(num))
-#     else:
-#         return -1
-
-# input_string = input()
-# result = next_smaller(input_string)
-# print(result)
-
-
-
-
 
 
 
